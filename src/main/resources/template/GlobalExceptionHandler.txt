@@ -1,0 +1,51 @@
+import com.easychat.enums.ResponseCodeEnum;
+import com.easychat.exception.BusinessException;
+import com.easychat.entity.vo.Response;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
+import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public Response handleNoHandlerFoundException(NoHandlerFoundException e) {
+        return Response.fail(ResponseCodeEnum.CODE_404.getCode(), e.getMessage());
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    public Response handleBusinessException(BusinessException e) {
+        return Response.fail(ResponseCodeEnum.CODE_600.getCode(), e.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public Response handleException(Exception e) {
+        return Response.fail(ResponseCodeEnum.CODE_500.getCode(), e.getMessage());
+    }
+
+    @ExceptionHandler(DuplicateKeyException.class)
+    public Response handleDuplicateKeyException(DuplicateKeyException e) {
+        return Response.fail(ResponseCodeEnum.CODE_601.getCode(), e.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Response handleIllegalArgumentException(IllegalArgumentException e) {
+        return Response.fail(ResponseCodeEnum.CODE_400.getCode(), e.getMessage());
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public Response handleConstraintViolationException(ConstraintViolationException e) {
+        return Response.fail(ResponseCodeEnum.CODE_400.getCode(), e.getMessage());
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public Response handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        return Response.fail(ResponseCodeEnum.CODE_400.getCode(), e.getMessage());
+    }
+}

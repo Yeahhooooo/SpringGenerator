@@ -1,0 +1,35 @@
+import lombok.Data;
+
+@Data
+public class SimplePage {
+    private int PageNo;
+
+    private int countTotal;
+
+    private int pageSize;
+
+    private int pageTotal;
+
+    private int start;
+
+    private int end;
+
+    public SimplePage(int pageNo, int countTotal, int pageSize) {
+        this.PageNo = pageNo > 0 ? pageNo : 1;
+        this.countTotal = countTotal;
+        this.pageSize = pageSize < 0 ? PageSizeEnum.PAGE_SIZE_10.getSize() : pageSize;
+        this.pageTotal = countTotal > 0 ? (int) Math.ceil((double) countTotal / pageSize) : 1;
+
+        if(PageNo > pageTotal) {
+            this.PageNo = pageTotal;
+        }
+
+        this.start = (PageNo - 1) * pageSize;
+        this.end = pageSize;
+    }
+
+    public SimplePage(int start, int end) {
+        this.start = start;
+        this.end = end;
+    }
+}

@@ -1,0 +1,30 @@
+import lombok.Data;
+
+@Data
+public class Response<T> {
+
+    private String status;
+    private Integer code;
+    private String message;
+
+    private T data;
+
+    private static final String SUCCESS = "success";
+
+    private static final String FAIL = "fail";
+
+    public Response(String status, Integer code, String message, T data) {
+        this.status = status;
+        this.code = code;
+        this.message = message;
+        this.data = data;
+    }
+
+    public static <T> Response<T> success(T data) {
+        return new Response<>(SUCCESS, ResponseCodeEnum.CODE_200.getCode(), ResponseCodeEnum.CODE_200.getMessage(), data);
+    }
+
+    public static <T> Response<T> fail(Integer code, String message) {
+        return new Response<>(FAIL, code, message, null);
+    }
+}
