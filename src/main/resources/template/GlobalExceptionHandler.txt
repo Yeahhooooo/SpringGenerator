@@ -1,6 +1,3 @@
-import com.easychat.enums.ResponseCodeEnum;
-import com.easychat.exception.BusinessException;
-import com.easychat.entity.vo.Response;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
